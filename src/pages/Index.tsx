@@ -7,20 +7,46 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowRight, ArrowLeft, Calculator, RotateCcw } from "lucide-react";
 
-const steps = ["investmentCost", "currentRental", "returnAndLifespan", "results"];
+const steps = [
+  "investmentCost",
+  "currentRental",
+  "returnAndLifespan",
+  "occupancyRate",
+  "risksAndLosses",
+  "revenue",
+  "expenses",
+  "results"
+];
 
 export default function RentalCalculator() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
-    investmentCost: "",
-    currentRental: "",
-    desiredReturn: "",
-    lifespan: "",
+    investmentCost: "", // Custo do investimento
+    currentRental: "", // Valor atual de locação
+    desiredReturn: "", // Rentabilidade desejada
+    lifespan: "", // Vida útil estimada
+    occupancyRate: "", // Taxa de ocupação
+    risksAndLosses: "", // Riscos e perdas
+    defaultRate: "", // Taxa de inadimplência
+    totalRevenue: "", // Faturamento total
+    fixedCosts: "", // Custos fixos
   });
+
   const [results, setResults] = useState({
-    suggestedValue: 0,
-    monthlyReturn: 0,
-    currentValue: 0,
+    monthsInRental: 0, // Meses em locação
+    risksAndLossesResult: 0, // Resultado riscos e perdas
+    defaultRateResult: 0, // Resultado inadimplência
+    desiredReturnValue: 0, // Rentabilidade desejada
+    equipmentPaymentValue: 0, // Valor para pagar equipamento
+    replacementValue: 0, // Valor para repor equipamento
+    acquisitionAndReplacementCosts: 0, // Soma custos aquisição e reposição
+    investmentsAndCosts: 0, // Investimentos + reposição + custos
+    finalRisksAndLosses: 0, // Riscos e perdas finais
+    finalDefaultRate: 0, // Inadimplência final
+    operationalCosts: 0, // Custos operacionais
+    suggestedRentalValue: 0, // Valor sugerido para locação
+    profitLoss: 0, // Ganho/Prejuízo
+    currentSuggestedDifference: 0, // Diferença entre valor atual e sugerido
   });
 
   const progress = ((currentStep + 1) / steps.length) * 100;
@@ -34,15 +60,49 @@ export default function RentalCalculator() {
     const currentRental = parseFloat(formData.currentRental);
     const desiredReturn = parseFloat(formData.desiredReturn) / 100;
     const lifespan = parseInt(formData.lifespan);
+    const occupancyRate = parseFloat(formData.occupancyRate) / 100;
+    const risksAndLosses = parseFloat(formData.risksAndLosses) / 100;
+    const defaultRate = parseFloat(formData.defaultRate) / 100;
+    const totalRevenue = parseFloat(formData.totalRevenue);
+    const fixedCosts = parseFloat(formData.fixedCosts);
 
+    // Cálculos conforme formulário original
+    const monthsInRental = lifespan;
     const monthlyDepreciation = investmentCost / lifespan;
     const monthlyReturn = investmentCost * desiredReturn;
-    const suggestedValue = monthlyDepreciation + monthlyReturn;
+    const operationalCosts = (investmentCost * occupancyRate) / 100;
+    
+    const replacementValue = monthlyDepreciation;
+    const acquisitionAndReplacementCosts = replacementValue * 2;
+    
+    const risksAndLossesResult = risksAndLosses / 12;
+    const defaultRateResult = defaultRate / 12;
+    
+    const finalRisksAndLosses = investmentCost * risksAndLossesResult;
+    const finalDefaultRate = currentRental * defaultRateResult;
+    
+    const costRatio = fixedCosts / totalRevenue;
+    const baseValue = acquisitionAndReplacementCosts / (1 - costRatio);
+    
+    const suggestedRentalValue = baseValue + monthlyReturn + finalRisksAndLosses;
+    const profitLoss = currentRental - suggestedRentalValue;
+    const currentSuggestedDifference = currentRental - suggestedRentalValue;
 
     setResults({
-      suggestedValue,
-      monthlyReturn: desiredReturn,
-      currentValue: currentRental,
+      monthsInRental,
+      risksAndLossesResult,
+      defaultRateResult,
+      desiredReturnValue: monthlyReturn,
+      equipmentPaymentValue: monthlyDepreciation,
+      replacementValue,
+      acquisitionAndReplacementCosts,
+      investmentsAndCosts: baseValue,
+      finalRisksAndLosses,
+      finalDefaultRate,
+      operationalCosts,
+      suggestedRentalValue,
+      profitLoss,
+      currentSuggestedDifference
     });
   };
 
@@ -67,6 +127,11 @@ export default function RentalCalculator() {
       currentRental: "",
       desiredReturn: "",
       lifespan: "",
+      occupancyRate: "",
+      risksAndLosses: "",
+      defaultRate: "",
+      totalRevenue: "",
+      fixedCosts: "",
     });
     setCurrentStep(0);
   };
@@ -75,6 +140,14 @@ export default function RentalCalculator() {
     return new Intl.NumberFormat("pt-BR", {
       style: "currency",
       currency: "BRL",
+    }).format(value);
+  };
+
+  const formatPercent = (value: number) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "percent",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     }).format(value);
   };
 
@@ -187,26 +260,171 @@ export default function RentalCalculator() {
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
           >
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Taxa de Ocupação</label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  placeholder="Ex: 70"
+                  className="pr-8"
+                  value={formData.occupancyRate}
+                  onChange={(e) => handleInputChange("occupancyRate", e.target.value)}
+                />
+                <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+              </div>
+              <p className="text-sm text-gray-500">
+                Percentual do tempo que o equipamento fica locado
+              </p>
+            </div>
+          </motion.div>
+        );
+
+      case 4:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Riscos e Perdas</label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  placeholder="Ex: 5"
+                  className="pr-8"
+                  value={formData.risksAndLosses}
+                  onChange={(e) => handleInputChange("risksAndLosses", e.target.value)}
+                />
+                <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Taxa de Inadimplência</label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  placeholder="Ex: 3"
+                  className="pr-8"
+                  value={formData.defaultRate}
+                  onChange={(e) => handleInputChange("defaultRate", e.target.value)}
+                />
+                <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+              </div>
+            </div>
+          </motion.div>
+        );
+
+      case 5:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Faturamento Total</label>
+              <div className="relative">
+                <span className="absolute left-3 top-2.5 text-gray-500">R$</span>
+                <Input
+                  type="number"
+                  placeholder="Ex: 100000"
+                  className="pl-8"
+                  value={formData.totalRevenue}
+                  onChange={(e) => handleInputChange("totalRevenue", e.target.value)}
+                />
+              </div>
+              <p className="text-sm text-gray-500">
+                Faturamento anual da sua locadora
+              </p>
+            </div>
+          </motion.div>
+        );
+
+      case 6:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <div className="space-y-2">
+              <label className="text-sm font-medium">
+                Despesas e Custos Fixos
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-2.5 text-gray-500">R$</span>
+                <Input
+                  type="number"
+                  placeholder="Ex: 45000"
+                  className="pl-8"
+                  value={formData.fixedCosts}
+                  onChange={(e) => handleInputChange("fixedCosts", e.target.value)}
+                />
+              </div>
+              <p className="text-sm text-gray-500">
+                Total mensal de despesas da empresa
+              </p>
+            </div>
+          </motion.div>
+        );
+
+      case 7:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
             <Card className="p-6 bg-gradient-to-br from-primary to-primary/80 text-white">
               <h3 className="text-lg font-semibold mb-4">
-                Valor Ideal de Locação
+                Valor Sugerido para Locação
               </h3>
               <p className="text-3xl font-bold mb-6">
-                {formatCurrency(results.suggestedValue)}
+                {formatCurrency(results.suggestedRentalValue)}
               </p>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/10 p-4 rounded-lg">
-                  <h6 className="text-sm mb-2">Rentabilidade Mensal</h6>
+                  <h6 className="text-sm mb-2">Valor Atual</h6>
                   <p className="text-xl font-semibold">
-                    {(results.monthlyReturn * 100).toFixed(1)}%
+                    {formatCurrency(parseFloat(formData.currentRental))}
                   </p>
                 </div>
                 <div className="bg-white/10 p-4 rounded-lg">
-                  <h6 className="text-sm mb-2">Valor Atual</h6>
+                  <h6 className="text-sm mb-2">Diferença</h6>
                   <p className="text-xl font-semibold">
-                    {formatCurrency(results.currentValue)}
+                    {formatCurrency(results.currentSuggestedDifference)}
                   </p>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-4">
+                <div className="bg-white/10 p-4 rounded-lg">
+                  <h6 className="text-sm mb-2">Detalhamento dos Custos</h6>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Depreciação Mensal:</span>
+                      <span>{formatCurrency(results.equipmentPaymentValue)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Rentabilidade:</span>
+                      <span>{formatCurrency(results.desiredReturnValue)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Riscos e Perdas:</span>
+                      <span>{formatCurrency(results.finalRisksAndLosses)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Inadimplência:</span>
+                      <span>{formatCurrency(results.finalDefaultRate)}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Card>
