@@ -166,30 +166,33 @@ export default function RentalCalculator() {
       case 0:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8"
           >
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 text-primary">
-                <DollarSign className="w-6 h-6" />
-                <h2 className="text-xl font-semibold">Custo do Investimento</h2>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-primary" />
               </div>
-              <div className="glass-card p-6 space-y-4">
+              <div>
+                <h2 className="mui-title">Custo do Investimento</h2>
+                <p className="mui-body">Digite o valor total investido no equipamento</p>
+              </div>
+            </div>
+            
+            <div className="mui-card p-6">
+              <div className="mui-input-wrapper">
                 <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-gray-500">R$</span>
+                  <span className="absolute left-4 top-3.5 text-gray-400">R$</span>
                   <Input
                     type="number"
                     placeholder="Ex: 4500"
-                    className="pl-8 h-12 text-lg"
+                    className="pl-10 h-14 text-lg rounded-xl border-gray-200"
                     value={formData.investmentCost}
                     onChange={(e) => handleInputChange("investmentCost", e.target.value)}
                   />
                 </div>
-                <p className="text-sm text-gray-500">
-                  Digite o valor total investido no equipamento
-                </p>
               </div>
             </div>
           </motion.div>
@@ -198,28 +201,34 @@ export default function RentalCalculator() {
       case 1:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8"
           >
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Valor Atual de Locação
-              </label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">R$</span>
-                <Input
-                  type="number"
-                  placeholder="Ex: 450"
-                  className="pl-8"
-                  value={formData.currentRental}
-                  onChange={(e) => handleInputChange("currentRental", e.target.value)}
-                />
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                <Calendar className="w-6 h-6" />
               </div>
-              <p className="text-sm text-gray-500">
-                Valor atual cobrado pela locação
-              </p>
+              <div>
+                <h2 className="mui-title">Valor Atual de Locação</h2>
+                <p className="mui-body">Valor atual cobrado pela locação</p>
+              </div>
+            </div>
+            
+            <div className="mui-card p-6">
+              <div className="mui-input-wrapper">
+                <div className="relative">
+                  <span className="absolute left-4 top-3.5 text-gray-400">R$</span>
+                  <Input
+                    type="number"
+                    placeholder="Ex: 450"
+                    className="pl-10 h-14 text-lg rounded-xl border-gray-200"
+                    value={formData.currentRental}
+                    onChange={(e) => handleInputChange("currentRental", e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
           </motion.div>
         );
@@ -227,41 +236,50 @@ export default function RentalCalculator() {
       case 2:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8"
           >
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Rentabilidade Desejada
-              </label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  placeholder="Ex: 10"
-                  className="pr-8"
-                  value={formData.desiredReturn}
-                  onChange={(e) => handleInputChange("desiredReturn", e.target.value)}
-                />
-                <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                <Percent className="w-6 h-6" />
               </div>
-              <p className="text-sm text-gray-500">Por mês</p>
+              <div>
+                <h2 className="mui-title">Rentabilidade Desejada</h2>
+                <p className="mui-body">Por mês</p>
+              </div>
+            </div>
+            
+            <div className="mui-card p-6">
+              <div className="mui-input-wrapper">
+                <div className="relative">
+                  <Input
+                    type="number"
+                    placeholder="Ex: 10"
+                    className="pr-8"
+                    value={formData.desiredReturn}
+                    onChange={(e) => handleInputChange("desiredReturn", e.target.value)}
+                  />
+                  <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Vida Útil Estimada</label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  placeholder="Ex: 60"
-                  className="pr-16"
-                  value={formData.lifespan}
-                  onChange={(e) => handleInputChange("lifespan", e.target.value)}
-                />
-                <span className="absolute right-3 top-2.5 text-gray-500">
-                  meses
-                </span>
+            <div className="mui-card p-6">
+              <div className="mui-input-wrapper">
+                <div className="relative">
+                  <Input
+                    type="number"
+                    placeholder="Ex: 60"
+                    className="pr-16"
+                    value={formData.lifespan}
+                    onChange={(e) => handleInputChange("lifespan", e.target.value)}
+                  />
+                  <span className="absolute right-3 top-2.5 text-gray-500">
+                    meses
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -270,26 +288,34 @@ export default function RentalCalculator() {
       case 3:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8"
           >
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Taxa de Ocupação</label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  placeholder="Ex: 70"
-                  className="pr-8"
-                  value={formData.occupancyRate}
-                  onChange={(e) => handleInputChange("occupancyRate", e.target.value)}
-                />
-                <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                <Percent className="w-6 h-6" />
               </div>
-              <p className="text-sm text-gray-500">
-                Percentual do tempo que o equipamento fica locado
-              </p>
+              <div>
+                <h2 className="mui-title">Taxa de Ocupação</h2>
+                <p className="mui-body">Percentual do tempo que o equipamento fica locado</p>
+              </div>
+            </div>
+            
+            <div className="mui-card p-6">
+              <div className="mui-input-wrapper">
+                <div className="relative">
+                  <Input
+                    type="number"
+                    placeholder="Ex: 70"
+                    className="pr-8"
+                    value={formData.occupancyRate}
+                    onChange={(e) => handleInputChange("occupancyRate", e.target.value)}
+                  />
+                  <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+                </div>
+              </div>
             </div>
           </motion.div>
         );
@@ -297,36 +323,48 @@ export default function RentalCalculator() {
       case 4:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8"
           >
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Riscos e Perdas</label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  placeholder="Ex: 5"
-                  className="pr-8"
-                  value={formData.risksAndLosses}
-                  onChange={(e) => handleInputChange("risksAndLosses", e.target.value)}
-                />
-                <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                <AlertTriangle className="w-6 h-6" />
+              </div>
+              <div>
+                <h2 className="mui-title">Riscos e Perdas</h2>
+                <p className="mui-body">%</p>
+              </div>
+            </div>
+            
+            <div className="mui-card p-6">
+              <div className="mui-input-wrapper">
+                <div className="relative">
+                  <Input
+                    type="number"
+                    placeholder="Ex: 5"
+                    className="pr-8"
+                    value={formData.risksAndLosses}
+                    onChange={(e) => handleInputChange("risksAndLosses", e.target.value)}
+                  />
+                  <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Taxa de Inadimplência</label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  placeholder="Ex: 3"
-                  className="pr-8"
-                  value={formData.defaultRate}
-                  onChange={(e) => handleInputChange("defaultRate", e.target.value)}
-                />
-                <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+            <div className="mui-card p-6">
+              <div className="mui-input-wrapper">
+                <div className="relative">
+                  <Input
+                    type="number"
+                    placeholder="Ex: 3"
+                    className="pr-8"
+                    value={formData.defaultRate}
+                    onChange={(e) => handleInputChange("defaultRate", e.target.value)}
+                  />
+                  <span className="absolute right-3 top-2.5 text-gray-500">%</span>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -335,26 +373,34 @@ export default function RentalCalculator() {
       case 5:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8"
           >
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Faturamento Total</label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">R$</span>
-                <Input
-                  type="number"
-                  placeholder="Ex: 100000"
-                  className="pl-8"
-                  value={formData.totalRevenue}
-                  onChange={(e) => handleInputChange("totalRevenue", e.target.value)}
-                />
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                <DollarSign className="w-6 h-6" />
               </div>
-              <p className="text-sm text-gray-500">
-                Faturamento anual da sua locadora
-              </p>
+              <div>
+                <h2 className="mui-title">Faturamento Total</h2>
+                <p className="mui-body">Faturamento anual da sua locadora</p>
+              </div>
+            </div>
+            
+            <div className="mui-card p-6">
+              <div className="mui-input-wrapper">
+                <div className="relative">
+                  <span className="absolute left-4 top-3.5 text-gray-400">R$</span>
+                  <Input
+                    type="number"
+                    placeholder="Ex: 100000"
+                    className="pl-10 h-14 text-lg rounded-xl border-gray-200"
+                    value={formData.totalRevenue}
+                    onChange={(e) => handleInputChange("totalRevenue", e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
           </motion.div>
         );
@@ -362,28 +408,34 @@ export default function RentalCalculator() {
       case 6:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8"
           >
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Despesas e Custos Fixos
-              </label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">R$</span>
-                <Input
-                  type="number"
-                  placeholder="Ex: 45000"
-                  className="pl-8"
-                  value={formData.fixedCosts}
-                  onChange={(e) => handleInputChange("fixedCosts", e.target.value)}
-                />
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                <DollarSign className="w-6 h-6" />
               </div>
-              <p className="text-sm text-gray-500">
-                Total mensal de despesas da empresa
-              </p>
+              <div>
+                <h2 className="mui-title">Despesas e Custos Fixos</h2>
+                <p className="mui-body">Total mensal de despesas da empresa</p>
+              </div>
+            </div>
+            
+            <div className="mui-card p-6">
+              <div className="mui-input-wrapper">
+                <div className="relative">
+                  <span className="absolute left-4 top-3.5 text-gray-400">R$</span>
+                  <Input
+                    type="number"
+                    placeholder="Ex: 45000"
+                    className="pl-10 h-14 text-lg rounded-xl border-gray-200"
+                    value={formData.fixedCosts}
+                    onChange={(e) => handleInputChange("fixedCosts", e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
           </motion.div>
         );
@@ -391,74 +443,80 @@ export default function RentalCalculator() {
       case 7:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             className="space-y-6"
           >
-            <Card className="result-card p-8 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <Calculator className="w-8 h-8" />
-                <h3 className="text-2xl font-bold">Resultado da Análise</h3>
+            <Card className="mui-result-card p-8">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                  <Calculator className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-medium">Resultado Final</h3>
+                  <p className="text-white/80">Análise completa do investimento</p>
+                </div>
               </div>
 
-              <div className="space-y-6">
-                <div>
+              <div className="space-y-8">
+                <div className="text-center p-6 bg-white/5 rounded-2xl backdrop-blur-sm">
                   <h4 className="text-lg font-medium mb-2">Valor Sugerido</h4>
-                  <p className="text-4xl font-bold mb-4">
+                  <p className="text-5xl font-bold tracking-tight mb-2">
                     {formatCurrency(results.suggestedRentalValue)}
                   </p>
+                  <p className="text-white/60">valor mensal recomendado</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/10 p-4 rounded-xl">
-                    <h6 className="text-sm mb-1">Valor Atual</h6>
-                    <p className="text-xl font-semibold">
+                  <div className="mui-stat-card">
+                    <h6 className="text-white/60 mb-2">Valor Atual</h6>
+                    <p className="text-2xl font-semibold">
                       {formatCurrency(parseFloat(formData.currentRental))}
                     </p>
                   </div>
-                  <div className="bg-white/10 p-4 rounded-xl">
-                    <h6 className="text-sm mb-1">Diferença</h6>
-                    <p className="text-xl font-semibold">
+                  <div className="mui-stat-card">
+                    <h6 className="text-white/60 mb-2">Diferença</h6>
+                    <p className="text-2xl font-semibold">
                       {formatCurrency(results.currentSuggestedDifference)}
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-white/10 p-6 rounded-xl space-y-4">
-                  <h6 className="text-lg font-medium mb-4">Detalhamento</h6>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        Depreciação Mensal
+                <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-sm">
+                  <h6 className="text-lg font-medium mb-6">Detalhamento</h6>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between py-2">
+                      <span className="flex items-center gap-3">
+                        <Calendar className="w-5 h-5 text-white/60" />
+                        <span>Depreciação Mensal</span>
                       </span>
                       <span className="font-medium">
                         {formatCurrency(results.equipmentPaymentValue)}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="flex items-center gap-2">
-                        <PiggyBank className="w-4 h-4" />
-                        Rentabilidade
+                    <div className="flex items-center justify-between py-2">
+                      <span className="flex items-center gap-3">
+                        <PiggyBank className="w-5 h-5 text-white/60" />
+                        <span>Rentabilidade</span>
                       </span>
                       <span className="font-medium">
                         {formatCurrency(results.desiredReturnValue)}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="flex items-center gap-2">
-                        <AlertTriangle className="w-4 h-4" />
-                        Riscos e Perdas
+                    <div className="flex items-center justify-between py-2">
+                      <span className="flex items-center gap-3">
+                        <AlertTriangle className="w-5 h-5 text-white/60" />
+                        <span>Riscos e Perdas</span>
                       </span>
                       <span className="font-medium">
                         {formatCurrency(results.finalRisksAndLosses)}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="flex items-center gap-2">
-                        <Users className="w-4 h-4" />
-                        Inadimplência
+                    <div className="flex items-center justify-between py-2">
+                      <span className="flex items-center gap-3">
+                        <Users className="w-5 h-5 text-white/60" />
+                        <span>Inadimplência</span>
                       </span>
                       <span className="font-medium">
                         {formatCurrency(results.finalDefaultRate)}
@@ -477,58 +535,67 @@ export default function RentalCalculator() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-8 px-4">
-      <div className="max-w-md mx-auto space-y-8">
-        <div className="text-center">
-          <div className="w-24 h-24 mx-auto bg-white rounded-3xl shadow-lg p-4 mb-6">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+      <div className="max-w-2xl mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <div className="w-20 h-20 mx-auto bg-white rounded-2xl shadow-lg p-4 mb-6 transform rotate-12">
             <img
               src="https://www.jotform.com/uploads/rafaelcsmarilia/form_files/banner%20ilustra%C3%A7%C3%A3o%20c%C3%A1lculo%20de%20loca%C3%A7%C3%A3o.622f7c7be31da8.98104709.jpg"
               alt="ALEC"
               className="w-full h-full object-contain"
             />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-3">
             Calculadora de Locação
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-lg">
             Calcule o valor ideal para sua locação de equipamentos
           </p>
         </div>
 
-        <div className="relative">
-          <Progress value={progress} className="h-2 rounded-full" />
-          <span className="absolute right-0 top-4 text-sm text-gray-500">
-            {currentStep + 1} de {steps.length}
-          </span>
+        <div className="mb-8">
+          <div className="mui-stepper">
+            {steps.map((_, index) => (
+              <div
+                key={index}
+                className={`mui-step ${
+                  index === currentStep ? "mui-step-active" : ""
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
-        <Card className="form-card p-6">
+        <Card className="mui-card p-8">
           <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
 
-          <div className="flex justify-between mt-8">
+          <div className="flex justify-between mt-8 pt-8 border-t border-gray-100">
             {currentStep > 0 && (
               <Button
                 variant="outline"
                 onClick={handlePrevious}
-                className="flex items-center gap-2 rounded-xl"
+                className="flex items-center gap-2 h-12 px-6 rounded-xl"
               >
-                <ArrowLeft className="w-4 h-4" /> Voltar
+                <ArrowLeft className="w-5 h-5" />
+                Voltar
               </Button>
             )}
             {currentStep < steps.length - 1 ? (
               <Button
                 onClick={handleNext}
-                className="flex items-center gap-2 ml-auto rounded-xl"
+                className="flex items-center gap-2 ml-auto h-12 px-6 rounded-xl bg-primary hover:bg-primary/90"
               >
-                Continuar <ArrowRight className="w-4 h-4" />
+                Continuar
+                <ArrowRight className="w-5 h-5" />
               </Button>
             ) : (
               <Button
                 onClick={handleReset}
                 variant="outline"
-                className="flex items-center gap-2 ml-auto rounded-xl"
+                className="flex items-center gap-2 ml-auto h-12 px-6 rounded-xl"
               >
-                <RotateCcw className="w-4 h-4" /> Novo Cálculo
+                <RotateCcw className="w-5 h-5" />
+                Novo Cálculo
               </Button>
             )}
           </div>
