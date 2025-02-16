@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 220 33% 98%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -24,7 +24,7 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    --radius: 1rem;
   }
 }
 
@@ -38,29 +38,43 @@
 }
 
 .glass-card {
-  @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-lg;
+  @apply bg-white/90 backdrop-blur-lg border border-white/20 shadow-lg;
 }
 
-.form-section {
-  @apply transition-all duration-300 ease-in-out;
-}
-
-.form-section-enter {
-  @apply opacity-0 translate-x-full;
-}
-
-.form-section-enter-active {
-  @apply opacity-100 translate-x-0;
-}
-
-.form-section-exit {
-  @apply opacity-100 translate-x-0;
-}
-
-.form-section-exit-active {
-  @apply opacity-0 -translate-x-full;
+.input-wrapper {
+  @apply relative rounded-xl overflow-hidden transition-all duration-200;
 }
 
 .input-focused {
-  @apply ring-2 ring-primary ring-offset-2 transition-all duration-200;
+  @apply ring-2 ring-primary ring-offset-2;
+}
+
+.form-card {
+  @apply rounded-2xl shadow-xl bg-gradient-to-br from-white to-white/95 backdrop-blur-xl border border-white/50;
+}
+
+.result-card {
+  @apply bg-gradient-to-br from-primary/90 to-primary shadow-lg text-white;
+}
+
+.step-enter {
+  @apply transition-all duration-300 ease-out;
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.step-enter-active {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.step-exit {
+  @apply transition-all duration-300 ease-in;
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.step-exit-active {
+  transform: translateX(-100%);
+  opacity: 0;
 }

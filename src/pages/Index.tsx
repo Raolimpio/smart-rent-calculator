@@ -1,11 +1,22 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, ArrowLeft, Calculator, RotateCcw } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  Calculator,
+  RotateCcw,
+  DollarSign,
+  Percent,
+  Calendar,
+  Users,
+  AlertTriangle,
+  Building,
+  PiggyBank,
+} from "lucide-react";
 
 const steps = [
   "investmentCost",
@@ -66,7 +77,6 @@ export default function RentalCalculator() {
     const totalRevenue = parseFloat(formData.totalRevenue);
     const fixedCosts = parseFloat(formData.fixedCosts);
 
-    // Cálculos conforme formulário original
     const monthsInRental = lifespan;
     const monthlyDepreciation = investmentCost / lifespan;
     const monthlyReturn = investmentCost * desiredReturn;
@@ -161,21 +171,26 @@ export default function RentalCalculator() {
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
           >
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Custo do Investimento</label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-gray-500">R$</span>
-                <Input
-                  type="number"
-                  placeholder="Ex: 4500"
-                  className="pl-8"
-                  value={formData.investmentCost}
-                  onChange={(e) => handleInputChange("investmentCost", e.target.value)}
-                />
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 text-primary">
+                <DollarSign className="w-6 h-6" />
+                <h2 className="text-xl font-semibold">Custo do Investimento</h2>
               </div>
-              <p className="text-sm text-gray-500">
-                Valor total investido no equipamento
-              </p>
+              <div className="glass-card p-6 space-y-4">
+                <div className="relative">
+                  <span className="absolute left-3 top-2.5 text-gray-500">R$</span>
+                  <Input
+                    type="number"
+                    placeholder="Ex: 4500"
+                    className="pl-8 h-12 text-lg"
+                    value={formData.investmentCost}
+                    onChange={(e) => handleInputChange("investmentCost", e.target.value)}
+                  />
+                </div>
+                <p className="text-sm text-gray-500">
+                  Digite o valor total investido no equipamento
+                </p>
+              </div>
             </div>
           </motion.div>
         );
@@ -381,48 +396,73 @@ export default function RentalCalculator() {
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
           >
-            <Card className="p-6 bg-gradient-to-br from-primary to-primary/80 text-white">
-              <h3 className="text-lg font-semibold mb-4">
-                Valor Sugerido para Locação
-              </h3>
-              <p className="text-3xl font-bold mb-6">
-                {formatCurrency(results.suggestedRentalValue)}
-              </p>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/10 p-4 rounded-lg">
-                  <h6 className="text-sm mb-2">Valor Atual</h6>
-                  <p className="text-xl font-semibold">
-                    {formatCurrency(parseFloat(formData.currentRental))}
-                  </p>
-                </div>
-                <div className="bg-white/10 p-4 rounded-lg">
-                  <h6 className="text-sm mb-2">Diferença</h6>
-                  <p className="text-xl font-semibold">
-                    {formatCurrency(results.currentSuggestedDifference)}
-                  </p>
-                </div>
+            <Card className="result-card p-8 rounded-2xl">
+              <div className="flex items-center gap-3 mb-6">
+                <Calculator className="w-8 h-8" />
+                <h3 className="text-2xl font-bold">Resultado da Análise</h3>
               </div>
 
-              <div className="mt-6 space-y-4">
-                <div className="bg-white/10 p-4 rounded-lg">
-                  <h6 className="text-sm mb-2">Detalhamento dos Custos</h6>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>Depreciação Mensal:</span>
-                      <span>{formatCurrency(results.equipmentPaymentValue)}</span>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-lg font-medium mb-2">Valor Sugerido</h4>
+                  <p className="text-4xl font-bold mb-4">
+                    {formatCurrency(results.suggestedRentalValue)}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-white/10 p-4 rounded-xl">
+                    <h6 className="text-sm mb-1">Valor Atual</h6>
+                    <p className="text-xl font-semibold">
+                      {formatCurrency(parseFloat(formData.currentRental))}
+                    </p>
+                  </div>
+                  <div className="bg-white/10 p-4 rounded-xl">
+                    <h6 className="text-sm mb-1">Diferença</h6>
+                    <p className="text-xl font-semibold">
+                      {formatCurrency(results.currentSuggestedDifference)}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-white/10 p-6 rounded-xl space-y-4">
+                  <h6 className="text-lg font-medium mb-4">Detalhamento</h6>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        Depreciação Mensal
+                      </span>
+                      <span className="font-medium">
+                        {formatCurrency(results.equipmentPaymentValue)}
+                      </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Rentabilidade:</span>
-                      <span>{formatCurrency(results.desiredReturnValue)}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="flex items-center gap-2">
+                        <PiggyBank className="w-4 h-4" />
+                        Rentabilidade
+                      </span>
+                      <span className="font-medium">
+                        {formatCurrency(results.desiredReturnValue)}
+                      </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Riscos e Perdas:</span>
-                      <span>{formatCurrency(results.finalRisksAndLosses)}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4" />
+                        Riscos e Perdas
+                      </span>
+                      <span className="font-medium">
+                        {formatCurrency(results.finalRisksAndLosses)}
+                      </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Inadimplência:</span>
-                      <span>{formatCurrency(results.finalDefaultRate)}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="flex items-center gap-2">
+                        <Users className="w-4 h-4" />
+                        Inadimplência
+                      </span>
+                      <span className="font-medium">
+                        {formatCurrency(results.finalDefaultRate)}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -437,25 +477,32 @@ export default function RentalCalculator() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-4">
-      <div className="max-w-md mx-auto space-y-6">
-        <div className="text-center mb-8">
-          <img
-            src="https://www.jotform.com/uploads/rafaelcsmarilia/form_files/banner%20ilustra%C3%A7%C3%A3o%20c%C3%A1lculo%20de%20loca%C3%A7%C3%A3o.622f7c7be31da8.98104709.jpg"
-            alt="ALEC"
-            className="w-32 h-32 mx-auto object-cover rounded-2xl mb-4"
-          />
-          <h1 className="text-2xl font-bold text-gray-900">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-8 px-4">
+      <div className="max-w-md mx-auto space-y-8">
+        <div className="text-center">
+          <div className="w-24 h-24 mx-auto bg-white rounded-3xl shadow-lg p-4 mb-6">
+            <img
+              src="https://www.jotform.com/uploads/rafaelcsmarilia/form_files/banner%20ilustra%C3%A7%C3%A3o%20c%C3%A1lculo%20de%20loca%C3%A7%C3%A3o.622f7c7be31da8.98104709.jpg"
+              alt="ALEC"
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Calculadora de Locação
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600">
             Calcule o valor ideal para sua locação de equipamentos
           </p>
         </div>
 
-        <Progress value={progress} className="h-2" />
+        <div className="relative">
+          <Progress value={progress} className="h-2 rounded-full" />
+          <span className="absolute right-0 top-4 text-sm text-gray-500">
+            {currentStep + 1} de {steps.length}
+          </span>
+        </div>
 
-        <Card className="p-6">
+        <Card className="form-card p-6">
           <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
 
           <div className="flex justify-between mt-8">
@@ -463,7 +510,7 @@ export default function RentalCalculator() {
               <Button
                 variant="outline"
                 onClick={handlePrevious}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 rounded-xl"
               >
                 <ArrowLeft className="w-4 h-4" /> Voltar
               </Button>
@@ -471,7 +518,7 @@ export default function RentalCalculator() {
             {currentStep < steps.length - 1 ? (
               <Button
                 onClick={handleNext}
-                className="flex items-center gap-2 ml-auto"
+                className="flex items-center gap-2 ml-auto rounded-xl"
               >
                 Continuar <ArrowRight className="w-4 h-4" />
               </Button>
@@ -479,7 +526,7 @@ export default function RentalCalculator() {
               <Button
                 onClick={handleReset}
                 variant="outline"
-                className="flex items-center gap-2 ml-auto"
+                className="flex items-center gap-2 ml-auto rounded-xl"
               >
                 <RotateCcw className="w-4 h-4" /> Novo Cálculo
               </Button>
