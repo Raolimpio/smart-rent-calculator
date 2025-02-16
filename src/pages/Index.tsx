@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   ArrowRight,
   ArrowLeft,
@@ -30,6 +31,7 @@ const steps = [
 ];
 
 export default function RentalCalculator() {
+  const isMobile = useIsMobile();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     investmentCost: "", // Custo do investimento
@@ -172,23 +174,23 @@ export default function RentalCalculator() {
             className="space-y-8"
           >
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-primary" />
+              <div className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} rounded-full bg-primary/10 flex items-center justify-center`}>
+                <DollarSign className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'} text-primary`} />
               </div>
               <div>
-                <h2 className="mui-title">Custo do Investimento</h2>
+                <h2 className={`mui-title ${isMobile ? 'text-xl' : 'text-2xl'}`}>Custo do Investimento</h2>
                 <p className="mui-body">Digite o valor total investido no equipamento</p>
               </div>
             </div>
             
-            <div className="mui-card p-6">
+            <div className="mui-card p-4 md:p-6">
               <div className="mui-input-wrapper">
                 <div className="relative">
                   <span className="absolute left-4 top-3.5 text-gray-400">R$</span>
                   <Input
                     type="number"
                     placeholder="Ex: 4500"
-                    className="pl-10 h-14 text-lg rounded-xl border-gray-200"
+                    className="pl-10 h-12 md:h-14 text-base md:text-lg rounded-xl border-gray-200"
                     value={formData.investmentCost}
                     onChange={(e) => handleInputChange("investmentCost", e.target.value)}
                   />
@@ -207,23 +209,23 @@ export default function RentalCalculator() {
             className="space-y-8"
           >
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                <Calendar className="w-6 h-6" />
+              <div className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} rounded-full bg-white/10 flex items-center justify-center`}>
+                <Calendar className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
               </div>
               <div>
-                <h2 className="mui-title">Valor Atual de Locação</h2>
+                <h2 className={`mui-title ${isMobile ? 'text-xl' : 'text-2xl'}`}>Valor Atual de Locação</h2>
                 <p className="mui-body">Valor atual cobrado pela locação</p>
               </div>
             </div>
             
-            <div className="mui-card p-6">
+            <div className="mui-card p-4 md:p-6">
               <div className="mui-input-wrapper">
                 <div className="relative">
                   <span className="absolute left-4 top-3.5 text-gray-400">R$</span>
                   <Input
                     type="number"
                     placeholder="Ex: 450"
-                    className="pl-10 h-14 text-lg rounded-xl border-gray-200"
+                    className="pl-10 h-12 md:h-14 text-base md:text-lg rounded-xl border-gray-200"
                     value={formData.currentRental}
                     onChange={(e) => handleInputChange("currentRental", e.target.value)}
                   />
@@ -242,16 +244,16 @@ export default function RentalCalculator() {
             className="space-y-8"
           >
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                <Percent className="w-6 h-6" />
+              <div className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} rounded-full bg-white/10 flex items-center justify-center`}>
+                <Percent className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
               </div>
               <div>
-                <h2 className="mui-title">Rentabilidade Desejada</h2>
+                <h2 className={`mui-title ${isMobile ? 'text-xl' : 'text-2xl'}`}>Rentabilidade Desejada</h2>
                 <p className="mui-body">Por mês</p>
               </div>
             </div>
             
-            <div className="mui-card p-6">
+            <div className="mui-card p-4 md:p-6">
               <div className="mui-input-wrapper">
                 <div className="relative">
                   <Input
@@ -266,7 +268,7 @@ export default function RentalCalculator() {
               </div>
             </div>
 
-            <div className="mui-card p-6">
+            <div className="mui-card p-4 md:p-6">
               <div className="mui-input-wrapper">
                 <div className="relative">
                   <Input
@@ -294,16 +296,16 @@ export default function RentalCalculator() {
             className="space-y-8"
           >
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                <Percent className="w-6 h-6" />
+              <div className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} rounded-full bg-white/10 flex items-center justify-center`}>
+                <Percent className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
               </div>
               <div>
-                <h2 className="mui-title">Taxa de Ocupação</h2>
+                <h2 className={`mui-title ${isMobile ? 'text-xl' : 'text-2xl'}`}>Taxa de Ocupação</h2>
                 <p className="mui-body">Percentual do tempo que o equipamento fica locado</p>
               </div>
             </div>
             
-            <div className="mui-card p-6">
+            <div className="mui-card p-4 md:p-6">
               <div className="mui-input-wrapper">
                 <div className="relative">
                   <Input
@@ -329,16 +331,16 @@ export default function RentalCalculator() {
             className="space-y-8"
           >
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                <AlertTriangle className="w-6 h-6" />
+              <div className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} rounded-full bg-white/10 flex items-center justify-center`}>
+                <AlertTriangle className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
               </div>
               <div>
-                <h2 className="mui-title">Riscos e Perdas</h2>
+                <h2 className={`mui-title ${isMobile ? 'text-xl' : 'text-2xl'}`}>Riscos e Perdas</h2>
                 <p className="mui-body">%</p>
               </div>
             </div>
             
-            <div className="mui-card p-6">
+            <div className="mui-card p-4 md:p-6">
               <div className="mui-input-wrapper">
                 <div className="relative">
                   <Input
@@ -353,7 +355,7 @@ export default function RentalCalculator() {
               </div>
             </div>
 
-            <div className="mui-card p-6">
+            <div className="mui-card p-4 md:p-6">
               <div className="mui-input-wrapper">
                 <div className="relative">
                   <Input
@@ -379,23 +381,23 @@ export default function RentalCalculator() {
             className="space-y-8"
           >
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                <DollarSign className="w-6 h-6" />
+              <div className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} rounded-full bg-white/10 flex items-center justify-center`}>
+                <DollarSign className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
               </div>
               <div>
-                <h2 className="mui-title">Faturamento Total</h2>
+                <h2 className={`mui-title ${isMobile ? 'text-xl' : 'text-2xl'}`}>Faturamento Total</h2>
                 <p className="mui-body">Faturamento anual da sua locadora</p>
               </div>
             </div>
             
-            <div className="mui-card p-6">
+            <div className="mui-card p-4 md:p-6">
               <div className="mui-input-wrapper">
                 <div className="relative">
                   <span className="absolute left-4 top-3.5 text-gray-400">R$</span>
                   <Input
                     type="number"
                     placeholder="Ex: 100000"
-                    className="pl-10 h-14 text-lg rounded-xl border-gray-200"
+                    className="pl-10 h-12 md:h-14 text-base md:text-lg rounded-xl border-gray-200"
                     value={formData.totalRevenue}
                     onChange={(e) => handleInputChange("totalRevenue", e.target.value)}
                   />
@@ -414,23 +416,23 @@ export default function RentalCalculator() {
             className="space-y-8"
           >
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                <DollarSign className="w-6 h-6" />
+              <div className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} rounded-full bg-white/10 flex items-center justify-center`}>
+                <DollarSign className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
               </div>
               <div>
-                <h2 className="mui-title">Despesas e Custos Fixos</h2>
+                <h2 className={`mui-title ${isMobile ? 'text-xl' : 'text-2xl'}`}>Despesas e Custos Fixos</h2>
                 <p className="mui-body">Total mensal de despesas da empresa</p>
               </div>
             </div>
             
-            <div className="mui-card p-6">
+            <div className="mui-card p-4 md:p-6">
               <div className="mui-input-wrapper">
                 <div className="relative">
                   <span className="absolute left-4 top-3.5 text-gray-400">R$</span>
                   <Input
                     type="number"
                     placeholder="Ex: 45000"
-                    className="pl-10 h-14 text-lg rounded-xl border-gray-200"
+                    className="pl-10 h-12 md:h-14 text-base md:text-lg rounded-xl border-gray-200"
                     value={formData.fixedCosts}
                     onChange={(e) => handleInputChange("fixedCosts", e.target.value)}
                   />
@@ -448,77 +450,77 @@ export default function RentalCalculator() {
             exit={{ opacity: 0, y: -20 }}
             className="space-y-6"
           >
-            <Card className="mui-result-card p-8">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                  <Calculator className="w-6 h-6" />
+            <Card className="mui-result-card p-4 md:p-8">
+              <div className="flex items-center gap-4 mb-6 md:mb-8">
+                <div className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} rounded-full bg-white/10 flex items-center justify-center`}>
+                  <Calculator className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'}`} />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-medium">Resultado Final</h3>
-                  <p className="text-white/80">Análise completa do investimento</p>
+                  <h3 className={`font-medium ${isMobile ? 'text-xl' : 'text-2xl'}`}>Resultado Final</h3>
+                  <p className="text-white/80 text-sm md:text-base">Análise completa do investimento</p>
                 </div>
               </div>
 
-              <div className="space-y-8">
-                <div className="text-center p-6 bg-white/5 rounded-2xl backdrop-blur-sm">
-                  <h4 className="text-lg font-medium mb-2">Valor Sugerido</h4>
-                  <p className="text-5xl font-bold tracking-tight mb-2">
+              <div className="space-y-6 md:space-y-8">
+                <div className="text-center p-4 md:p-6 bg-white/5 rounded-xl md:rounded-2xl backdrop-blur-sm">
+                  <h4 className="text-base md:text-lg font-medium mb-2">Valor Sugerido</h4>
+                  <p className={`${isMobile ? 'text-3xl' : 'text-5xl'} font-bold tracking-tight mb-2`}>
                     {formatCurrency(results.suggestedRentalValue)}
                   </p>
-                  <p className="text-white/60">valor mensal recomendado</p>
+                  <p className="text-white/60 text-sm">valor mensal recomendado</p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 md:gap-4">
                   <div className="mui-stat-card">
-                    <h6 className="text-white/60 mb-2">Valor Atual</h6>
-                    <p className="text-2xl font-semibold">
+                    <h6 className="text-white/60 text-sm mb-1 md:mb-2">Valor Atual</h6>
+                    <p className={`${isMobile ? 'text-xl' : 'text-2xl'} font-semibold`}>
                       {formatCurrency(parseFloat(formData.currentRental))}
                     </p>
                   </div>
                   <div className="mui-stat-card">
-                    <h6 className="text-white/60 mb-2">Diferença</h6>
-                    <p className="text-2xl font-semibold">
+                    <h6 className="text-white/60 text-sm mb-1 md:mb-2">Diferença</h6>
+                    <p className={`${isMobile ? 'text-xl' : 'text-2xl'} font-semibold`}>
                       {formatCurrency(results.currentSuggestedDifference)}
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-sm">
-                  <h6 className="text-lg font-medium mb-6">Detalhamento</h6>
-                  <div className="space-y-4">
+                <div className="bg-white/5 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm">
+                  <h6 className={`${isMobile ? 'text-base' : 'text-lg'} font-medium mb-4 md:mb-6`}>Detalhamento</h6>
+                  <div className="space-y-3 md:space-y-4">
                     <div className="flex items-center justify-between py-2">
-                      <span className="flex items-center gap-3">
-                        <Calendar className="w-5 h-5 text-white/60" />
-                        <span>Depreciação Mensal</span>
+                      <span className="flex items-center gap-2 md:gap-3">
+                        <Calendar className="w-4 h-4 md:w-5 md:h-5 text-white/60" />
+                        <span className="text-sm md:text-base">Depreciação Mensal</span>
                       </span>
-                      <span className="font-medium">
+                      <span className="font-medium text-sm md:text-base">
                         {formatCurrency(results.equipmentPaymentValue)}
                       </span>
                     </div>
                     <div className="flex items-center justify-between py-2">
-                      <span className="flex items-center gap-3">
-                        <PiggyBank className="w-5 h-5 text-white/60" />
-                        <span>Rentabilidade</span>
+                      <span className="flex items-center gap-2 md:gap-3">
+                        <PiggyBank className="w-4 h-4 md:w-5 md:h-5 text-white/60" />
+                        <span className="text-sm md:text-base">Rentabilidade</span>
                       </span>
-                      <span className="font-medium">
+                      <span className="font-medium text-sm md:text-base">
                         {formatCurrency(results.desiredReturnValue)}
                       </span>
                     </div>
                     <div className="flex items-center justify-between py-2">
-                      <span className="flex items-center gap-3">
-                        <AlertTriangle className="w-5 h-5 text-white/60" />
-                        <span>Riscos e Perdas</span>
+                      <span className="flex items-center gap-2 md:gap-3">
+                        <AlertTriangle className="w-4 h-4 md:w-5 md:h-5 text-white/60" />
+                        <span className="text-sm md:text-base">Riscos e Perdas</span>
                       </span>
-                      <span className="font-medium">
+                      <span className="font-medium text-sm md:text-base">
                         {formatCurrency(results.finalRisksAndLosses)}
                       </span>
                     </div>
                     <div className="flex items-center justify-between py-2">
-                      <span className="flex items-center gap-3">
-                        <Users className="w-5 h-5 text-white/60" />
-                        <span>Inadimplência</span>
+                      <span className="flex items-center gap-2 md:gap-3">
+                        <Users className="w-4 h-4 md:w-5 md:h-5 text-white/60" />
+                        <span className="text-sm md:text-base">Inadimplência</span>
                       </span>
-                      <span className="font-medium">
+                      <span className="font-medium text-sm md:text-base">
                         {formatCurrency(results.finalDefaultRate)}
                       </span>
                     </div>
@@ -536,24 +538,24 @@ export default function RentalCalculator() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
-      <div className="max-w-2xl mx-auto px-4 py-12">
-        <div className="text-center mb-12">
-          <div className="w-20 h-20 mx-auto bg-white rounded-2xl shadow-lg p-4 mb-6 transform rotate-12">
+      <div className="w-full max-w-2xl mx-auto px-4 py-6 md:py-12">
+        <div className="text-center mb-8 md:mb-12">
+          <div className={`${isMobile ? 'w-16 h-16' : 'w-20 h-20'} mx-auto bg-white rounded-2xl shadow-lg p-4 mb-4 md:mb-6 transform rotate-12`}>
             <img
               src="https://www.jotform.com/uploads/rafaelcsmarilia/form_files/banner%20ilustra%C3%A7%C3%A3o%20c%C3%A1lculo%20de%20loca%C3%A7%C3%A3o.622f7c7be31da8.98104709.jpg"
               alt="ALEC"
               className="w-full h-full object-contain"
             />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-3">
+          <h1 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold text-gray-900 tracking-tight mb-2 md:mb-3`}>
             Calculadora de Locação
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-base md:text-lg">
             Calcule o valor ideal para sua locação de equipamentos
           </p>
         </div>
 
-        <div className="mb-8">
+        <div className="mb-6 md:mb-8">
           <div className="mui-stepper">
             {steps.map((_, index) => (
               <div
@@ -566,35 +568,35 @@ export default function RentalCalculator() {
           </div>
         </div>
 
-        <Card className="mui-card p-8">
+        <Card className="mui-card p-4 md:p-8">
           <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
 
-          <div className="flex justify-between mt-8 pt-8 border-t border-gray-100">
+          <div className="flex justify-between mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-100">
             {currentStep > 0 && (
               <Button
                 variant="outline"
                 onClick={handlePrevious}
-                className="flex items-center gap-2 h-12 px-6 rounded-xl"
+                className="flex items-center gap-2 h-10 md:h-12 px-4 md:px-6 rounded-xl"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
                 Voltar
               </Button>
             )}
             {currentStep < steps.length - 1 ? (
               <Button
                 onClick={handleNext}
-                className="flex items-center gap-2 ml-auto h-12 px-6 rounded-xl bg-primary hover:bg-primary/90"
+                className="flex items-center gap-2 ml-auto h-10 md:h-12 px-4 md:px-6 rounded-xl bg-primary hover:bg-primary/90"
               >
                 Continuar
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </Button>
             ) : (
               <Button
                 onClick={handleReset}
                 variant="outline"
-                className="flex items-center gap-2 ml-auto h-12 px-6 rounded-xl"
+                className="flex items-center gap-2 ml-auto h-10 md:h-12 px-4 md:px-6 rounded-xl"
               >
-                <RotateCcw className="w-5 h-5" />
+                <RotateCcw className="w-4 h-4 md:w-5 md:h-5" />
                 Novo Cálculo
               </Button>
             )}
